@@ -1,0 +1,33 @@
+## DAX Query: Data Preview
+
+### Purpose
+This query previews the first 100 rows of the road casualty statistics dataset to inspect its structure and contents before building visuals or measures.
+
+### Query
+```dax
+EVALUATE
+    TOPN(100, 'dft-road-casualty-statistics-collision-provisional-2025 (2)')
+```
+
+### How It Works
+- **`EVALUATE`** — Runs a DAX query and returns a table (used in DAX query view, not inside a measure).
+- **`TOPN(100, table)`** — Returns the top 100 rows from the specified table. Without a sort argument, it returns rows in the table's default/storage order — not necessarily the "top" by any particular column.
+- **`'dft-road-casualty-statistics-collision-provisional-2025 (2)'`** — The table being queried, containing UK Department for Transport (DfT) provisional road collision statistics for 2025.
+
+### When to Use This
+- Quickly sanity-check the data after importing it.
+- Confirm column names and data types before writing measures.
+- Spot-check for blank/null values or unexpected formatting.
+
+### Tip
+To make this more useful, you can add a sort order, e.g.:
+```dax
+EVALUATE
+    TOPN(
+        100,
+        'dft-road-casualty-statistics-collision-provisional-2025 (2)',
+        'dft-road-casualty-statistics-collision-provisional-2025 (2)'[Date],
+        DESC
+    )
+```
+This would return the 100 most recent records instead of an arbitrary sample.
