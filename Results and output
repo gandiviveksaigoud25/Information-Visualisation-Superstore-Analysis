@@ -1,0 +1,67 @@
+# Results and Output
+
+## Task 2 — Sample Superstore Analysis: Summary Output
+
+**Dataset shape:** 9,994 rows × 21 columns
+**Total Orders:** 5,009
+**Total Sales:** $2,297,200.86
+**Total Profit:** $286,397.02
+
+### Output: Sales & Profit by Category
+
+| Category        | Total Sales ($) | Total Profit ($) |
+|-----------------|-----------------|-------------------|
+| Technology      | 836,154.03      | 145,454.95        |
+| Furniture       | 741,999.80      | 18,451.27         |
+| Office Supplies | 719,047.03      | 122,490.80        |
+
+**Result:** Technology drives the highest sales and profit. Furniture generates strong sales but the lowest profit margin, suggesting high discounting or costs in that category.
+
+### Output: Sales & Profit by Region
+
+| Region  | Total Sales ($) | Total Profit ($) |
+|---------|-----------------|-------------------|
+| West    | 725,457.82      | 108,418.45        |
+| East    | 678,781.24      | 91,522.78         |
+| Central | 501,239.89      | 39,706.36         |
+| South   | 391,721.90      | 46,749.43         |
+
+**Result:** The West region leads in both sales and profit. Central has the weakest profit relative to its sales volume.
+
+### Output: Sales & Profit by Shipping Mode
+
+| Ship Mode      | Total Sales ($) | Total Profit ($) |
+|----------------|-----------------|-------------------|
+| Standard Class | 1,358,215.74    | 164,088.79        |
+| Second Class   | 459,193.57      | 57,446.64         |
+| First Class    | 351,428.42      | 48,969.84         |
+| Same Day       | 128,363.12      | 15,891.76         |
+
+**Result:** Standard Class accounts for the majority of orders and profit, indicating most customers opt for slower, cheaper shipping.
+
+### Chart Outputs Generated
+
+| File | Description |
+|------|-------------|
+| `cat_sales_profit.png` | Bar chart — sales and profit per category |
+| `subcat_sales_profit.png` | Bar chart — sales and profit per sub-category |
+| `monthly_trend.png` | Line chart — sales/profit trend over time |
+| `discount_profit_scatter.png` | Scatter plot — discount level vs. profit |
+| `heatmap_region_category.png` | Heatmap — sales intensity by region and category |
+| `shipping_analysis.png` | Chart — shipping mode performance |
+
+---
+
+## Task 1 — UK Road Safety Data: Summary Output (Power BI)
+
+| Dashboard Visual | Output / Result |
+|---|---|
+| Geographical distribution map | Highest accident density in London, Manchester, and Birmingham |
+| Monthly trend line chart | Accident counts fluctuate seasonally, peaking around holiday periods |
+| Weather condition pie chart | Majority of accidents occur in clear weather, not adverse conditions |
+| Severity bar chart | Slight accidents far outnumber serious and fatal accidents |
+| Time-of-day chart | Afternoon hours show the highest collision frequency |
+| Speed limit chart | Lower speed-limit zones show a higher accident count than expected |
+| Road type treemap | Single carriageway roads account for the largest share of accidents |
+
+**Overall Result:** Urban, clear-weather, afternoon conditions on single carriageway roads represent the highest-risk combination for UK road accidents — pointing toward targeted safety interventions in cities and infrastructure reviews for single carriageway design.
