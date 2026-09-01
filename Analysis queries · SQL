@@ -1,0 +1,142 @@
+-- ============================================================
+-- Sample Superstore Analysis — SQL Queries
+-- Table assumed name: superstore
+-- Columns: "Row ID", "Order ID", "Order Date", "Ship Date", "Ship Mode",
+--          "Customer ID", "Customer Name", "Segment", "Country", "City",
+--          "State", "Postal Code", "Region", "Product ID", "Category",
+--          "Sub-Category", "Product Name", "Sales", "Quantity",
+--          "Discount", "Profit"
+-- ============================================================
+
+-- 1. Create table (adjust types for your SQL engine, e.g. Postgres/MySQL)
+CREATE TABLE superstore (
+    row_id        INT,
+    order_id      VARCHAR(20),
+    order_date    DATE,
+    ship_date     DATE,
+    ship_mode     VARCHAR(30),
+    customer_id   VARCHAR(20),
+    customer_name VARCHAR(100),
+    segment       VARCHAR(30),
+    country       VARCHAR(50),
+    city          VARCHAR(50),
+    state         VARCHAR(50),
+    postal_code   VARCHAR(10),
+    region        VARCHAR(20),
+    product_id    VARCHAR(20),
+    category      VARCHAR(50),
+    sub_category  VARCHAR(50),
+    product_name  VARCHAR(200),
+    sales         DECIMAL(10,2),
+    quantity      INT,
+    discount      DECIMAL(5,2),
+    profit        DECIMAL(10,2)
+);
+
+-- 2. Load data (example for Postgres — adjust for your engine)
+-- COPY superstore FROM '/path/to/Task2_data.csv' DELIMITER ',' CSV HEADER;
+
+-- ============================================================
+-- Sales & Profit by Category (mirrors cat_sales_profit.png)
+-- ============================================================
+SELECT
+    category,
+    ROUND(SUM(sales), 2)  AS total_sales,
+    ROUND(SUM(profit), 2) AS total_profit
+FROM superstore
+GROUP BY category
+ORDER BY total_sales DESC;
+
+-- ============================================================
+-- Sales & Profit by Sub-Category (mirrors subcat_sales_profit.png)
+-- ============================================================
+SELECT
+    category,
+    sub_category,
+    ROUND(SUM(sales), 2)  AS total_sales,
+    ROUND(SUM(profit), 2) AS total_profit
+FROM superstore
+GROUP BY category, sub_category
+ORDER BY total_sales DESC;
+
+-- ============================================================
+-- Monthly Sales Trend (mirrors monthly_trend.png)
+-- ============================================================
+SELECT
+    DATE_TRUNC('month', order_date) AS order_month,
+    ROUND(SUM(sales), 2)  AS monthly_sales,
+    ROUND(SUM(profit), 2) AS monthly_profit
+FROM superstore
+GROUP BY DATE_TRUNC('month', order_date)
+ORDER BY order_month;
+
+-- ============================================================
+-- Discount vs Profit relationship (mirrors discount_profit_scatter.png)
+-- ============================================================
+SELECT
+    discount,
+    ROUND(AVG(profit), 2) AS avg_profit,
+    COUNT(*)              AS order_count
+FROM superstore
+GROUP BY discount
+ORDER BY discount;
+
+-- ============================================================
+-- Region vs Category Heatmap data (mirrors heatmap_region_category.png)
+-- ============================================================
+SELECT
+    region,
+    category,
+    ROUND(SUM(sales), 2) AS total_sales
+FROM superstore
+GROUP BY region, category
+ORDER BY region, category;
+
+-- ============================================================
+-- Shipping Mode Analysis (mirrors shipping_analysis.png)
+-- ============================================================
+SELECT
+    ship_mode,
+    COUNT(*)                                   AS order_count,
+    ROUND(AVG(ship_date - order_date), 2)      AS avg_delivery_days,
+    ROUND(SUM(sales), 2)                       AS total_sales,
+    ROUND(SUM(profit), 2)                      AS total_profit
+FROM superstore
+GROUP BY ship_mode
+ORDER BY order_count DESC;
+
+-- ============================================================
+-- Top 10 Most Profitable Products
+-- ============================================================
+SELECT
+    product_name,
+    category,
+    ROUND(SUM(profit), 2) AS total_profit
+FROM superstore
+GROUP BY product_name, category
+ORDER BY total_profit DESC
+LIMIT 10;
+
+-- ============================================================
+-- Top 10 Least Profitable (Loss-Making) Products
+-- ============================================================
+SELECT
+    product_name,
+    category,
+    ROUND(SUM(profit), 2) AS total_profit
+FROM superstore
+GROUP BY product_name, category
+ORDER BY total_profit ASC
+LIMIT 10;
+
+-- ============================================================
+-- Sales by Customer Segment
+-- ============================================================
+SELECT
+    segment,
+    ROUND(SUM(sales), 2)  AS total_sales,
+    ROUND(SUM(profit), 2) AS total_profit,
+    COUNT(DISTINCT customer_id) AS unique_customers
+FROM superstore
+GROUP BY segment
+ORDER BY total_sales DESC;
